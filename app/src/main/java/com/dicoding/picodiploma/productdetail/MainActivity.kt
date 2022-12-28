@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupData() {
         val repository = RemoteDataSource(this)
-        repository.getDetailProduct().apply {
+        val product = repository.getDetailProduct().apply {
             binding.apply {
                 previewImageView.setImageResource(image)
                 nameTextView.text = name
@@ -59,6 +59,24 @@ class MainActivity : AppCompatActivity() {
                     rating.withNumberingFormat(),
                     countRating.withNumberingFormat()
                 )
+            }
+        }
+        setupAccessibility(productModel = product)
+    }
+
+    private fun setupAccessibility(productModel: ProductModel) {
+        productModel.apply {
+            binding.apply {
+                settingImageView.contentDescription = getString(R.string.settingDescription)
+                previewImageView.contentDescription = getString(R.string.previewDescription)
+                colorTextView.contentDescription = getString(R.string.colorDescription, color)
+                sizeTextView.contentDescription = getString(R.string.sizeDescription, size)
+                ratingTextView.contentDescription = getString(
+                    R.string.ratingDescription,
+                    rating.withNumberingFormat(),
+                    countRating.withNumberingFormat()
+                )
+                storeTextView.contentDescription = getString(R.string.storeDescription, store)
             }
         }
     }
